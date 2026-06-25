@@ -509,3 +509,750 @@ document.getElementById("menuPage").style.display="none";
 </body>
 
 </html>
+<!-- DASHBOARD ครู -->
+
+<div id="dashboardPage">
+
+
+<div class="dashboard-layout">
+
+
+<!-- เมนูด้านซ้าย -->
+
+<div class="sidebar">
+
+
+<h2>
+NPR-RIKEN
+</h2>
+
+
+<p>
+📊 Dashboard ครู
+</p>
+
+
+<button onclick="backMenu()">
+
+🏠 กลับเมนู
+
+</button>
+
+
+</div>
+
+
+
+
+
+<!-- ส่วนแสดงผล -->
+
+<div class="dashboard-content">
+
+
+<h1 class="menu-title">
+
+📊 Dashboard นักศึกษาฝึกงาน
+
+</h1>
+
+
+
+
+<!-- KPI -->
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>
+👨‍🎓 นักศึกษา
+</h3>
+
+<p>
+50
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+📅 วันทำงาน
+</h3>
+
+<p>
+1,100
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+⏱ OT รวม
+</h3>
+
+<p>
+350
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+📝 วันลา
+</h3>
+
+<p>
+25
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+✅ % ทำงาน
+</h3>
+
+<p>
+95%
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- กราฟ -->
+
+<div class="chart-grid">
+
+
+<div class="chart-box">
+
+<h2>
+📅 กราฟเข้า-ออกงาน
+</h2>
+
+<canvas id="attendanceChart"></canvas>
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+<h2>
+📈 % การทำงานรายคน
+</h2>
+
+<canvas id="workPercentChart"></canvas>
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+<h2>
+⏱ กราฟ OT
+</h2>
+
+<canvas id="otChart"></canvas>
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+<h2>
+📝 กราฟการลา
+</h2>
+
+<canvas id="leaveChart"></canvas>
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+<h2>
+💰 กราฟเงินเดือน
+</h2>
+
+<canvas id="salaryChart"></canvas>
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+<h2>
+👨‍🎓 สถานะนักศึกษา
+</h2>
+
+<canvas id="studentChart"></canvas>
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+<!-- Chart Library -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+
+// ตรวจสอบการ Login
+
+window.onload=function(){
+
+
+if(localStorage.getItem("login")=="success"){
+
+
+document.getElementById("loginPage").style.display="none";
+
+document.getElementById("menuPage").style.display="block";
+
+
+}
+
+}
+
+
+
+
+// Login
+
+function login(){
+
+
+localStorage.setItem("login","success");
+
+
+document.getElementById("loginPage").style.display="none";
+
+
+document.getElementById("menuPage").style.display="block";
+
+
+}
+
+
+
+
+// เปิดลิงก์
+
+function openLink(url){
+
+
+window.open(url,"_blank");
+
+
+}
+
+
+
+
+
+// Logout
+
+function logout(){
+
+
+localStorage.removeItem("login");
+
+
+document.getElementById("loginPage").style.display="flex";
+
+
+document.getElementById("menuPage").style.display="none";
+
+
+document.getElementById("dashboardPage").style.display="none";
+
+
+}
+
+
+
+
+
+// เปิด Dashboard
+
+function showDashboard(){
+
+
+document.getElementById("menuPage").style.display="none";
+
+
+document.getElementById("dashboardPage").style.display="block";
+
+
+
+createCharts();
+
+
+}
+
+
+
+
+
+// กลับเมนู
+
+function backMenu(){
+
+
+document.getElementById("dashboardPage").style.display="none";
+
+
+document.getElementById("menuPage").style.display="block";
+
+
+}
+
+
+
+
+
+// สร้างกราฟ
+
+function createCharts(){
+
+
+
+// เข้าออกงาน
+
+new Chart(
+
+document.getElementById("attendanceChart"),
+
+{
+
+type:"bar",
+
+data:{
+
+
+labels:[
+
+"จันทร์",
+"อังคาร",
+"พุธ",
+"พฤหัส",
+"ศุกร์"
+
+],
+
+
+datasets:[{
+
+
+label:"จำนวนคนเข้างาน",
+
+
+data:[
+
+48,
+50,
+47,
+49,
+50
+
+]
+
+
+}]
+
+
+},
+
+
+options:{
+
+responsive:true
+
+}
+
+
+}
+
+);
+
+
+
+
+
+
+// % การทำงาน
+
+new Chart(
+
+document.getElementById("workPercentChart"),
+
+{
+
+
+type:"line",
+
+
+data:{
+
+
+labels:[
+
+"นาย A",
+"นาย B",
+"นาย C",
+"นาย D"
+
+],
+
+
+datasets:[{
+
+
+label:"เปอร์เซ็นต์",
+
+
+data:[
+
+95,
+90,
+98,
+85
+
+]
+
+
+}]
+
+
+},
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+
+}
+
+);
+
+
+
+
+
+
+// OT
+
+new Chart(
+
+document.getElementById("otChart"),
+
+{
+
+
+type:"bar",
+
+
+data:{
+
+
+labels:[
+
+"OT1.5",
+"OT2",
+"OT3"
+
+],
+
+
+datasets:[{
+
+
+label:"ชั่วโมง",
+
+
+data:[
+
+250,
+80,
+20
+
+]
+
+
+}]
+
+
+},
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+// การลา
+
+new Chart(
+
+document.getElementById("leaveChart"),
+
+{
+
+
+type:"pie",
+
+
+data:{
+
+
+labels:[
+
+"ลากิจ",
+"ลาป่วย",
+"ขาดงาน"
+
+],
+
+
+datasets:[{
+
+
+data:[
+
+15,
+8,
+2
+
+]
+
+
+}]
+
+
+},
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+// เงินเดือน
+
+new Chart(
+
+document.getElementById("salaryChart"),
+
+{
+
+
+type:"line",
+
+
+data:{
+
+
+labels:[
+
+"ม.ค.",
+"ก.พ.",
+"มี.ค.",
+"เม.ย."
+
+],
+
+
+datasets:[{
+
+
+label:"เงินเดือนเฉลี่ย",
+
+
+data:[
+
+10000,
+10500,
+11000,
+12000
+
+]
+
+
+}]
+
+
+},
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+// สถานะนักศึกษา
+
+new Chart(
+
+document.getElementById("studentChart"),
+
+{
+
+
+type:"doughnut",
+
+
+data:{
+
+
+labels:[
+
+"ฝึกงานอยู่",
+"จบฝึกงาน",
+"พักงาน"
+
+],
+
+
+datasets:[{
+
+
+data:[
+
+40,
+8,
+2
+
+]
+
+
+}]
+
+
+},
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+
+}
+
+);
+
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
